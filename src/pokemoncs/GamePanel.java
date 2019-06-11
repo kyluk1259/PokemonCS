@@ -35,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable {
     //images
     private BufferedImage image;
     private Graphics2D g;
-    private Pokedex loadWildPokemon, loadPlayerPokemon, loadTrainerPokemon ;
+    private Pokedex loadWildPokemon, loadPlayerPokemon, loadTrainerPokemon;
 
     //input method
     private KeyHandler key;

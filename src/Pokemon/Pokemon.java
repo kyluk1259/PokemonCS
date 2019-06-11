@@ -31,7 +31,7 @@ public class Pokemon {
     private Animation ani;
 
     //One type, no status, remember to add type and moves once implemented
-    public Pokemon(String name, int maxHealth, int health, int attack, int defense, int spAttack, int spDefense, int speed, int experience, int level, float capture, Sprite sprite, Sprite backSprite) {
+    public Pokemon(String name, int maxHealth, int health, int attack, int defense, int spAttack, int spDefense, int speed, int experience, int level, float capture, Type tA, Sprite sprite, Sprite backSprite) {
         pokemon = name;
         maxHp = maxHealth;
         hp = health;
@@ -43,14 +43,15 @@ public class Pokemon {
         exp = experience;
         lvl = level;
         captureRate = capture;
+        typeA = tA;
         fSprite = sprite.getSpriteSheet();
         bSprite = backSprite.getSpriteSheet();
         ani = new Animation();
-        diff = (float)(hp / maxHp);
+        diff = (float) (hp / maxHp);
     }
 
-    //One type, status effect
-    public Pokemon(String name, int maxHealth, int health, int attack, int defense, int spAttack, int spDefense, int speed, int experience, int level, float capture, Move moveset[], Type tA, Sprite sprite, Sprite backSprite, Status status) {
+    //One type, status effect, add moveset
+    public Pokemon(String name, int maxHealth, int health, int attack, int defense, int spAttack, int spDefense, int speed, int experience, int level, float capture, Type tA, Sprite sprite, Sprite backSprite, Status status) {
         pokemon = name;
         maxHp = maxHealth;
         hp = health;
@@ -62,7 +63,7 @@ public class Pokemon {
         exp = experience;
         lvl = level;
         captureRate = capture;
-        moves = moveset;
+        //moves = moveset;
         typeA = tA;
         fSprite = sprite.getSpriteSheet();
         bSprite = backSprite.getSpriteSheet();
@@ -71,8 +72,8 @@ public class Pokemon {
         diff = (hp / maxHp);
     }
 
-    //Two types, no status
-    public Pokemon(String name, int maxHealth, int health, int attack, int defense, int spAttack, int spDefense, int speed, int experience, int level, float capture, Move moveset[], Type tA, Type tB, Sprite sprite, Sprite backSprite) {
+    //Two types, no status, add moveset
+    public Pokemon(String name, int maxHealth, int health, int attack, int defense, int spAttack, int spDefense, int speed, int experience, int level, float capture, Type tA, Type tB, Sprite sprite, Sprite backSprite) {
         pokemon = name;
         maxHp = maxHealth;
         hp = health;
@@ -84,7 +85,7 @@ public class Pokemon {
         exp = experience;
         lvl = level;
         captureRate = capture;
-        moves = moveset;
+        //moves = moveset;
         typeA = tA;
         typeB = tB;
         fSprite = sprite.getSpriteSheet();
@@ -196,7 +197,7 @@ public class Pokemon {
     public double getHpDiff() {
         double dhp = (double) hp;
         double dmhp = (double) maxHp;
-        diff = dhp/dmhp;
+        diff = dhp / dmhp;
         return diff;
     }
     //-------------------------------------------------------------
@@ -259,9 +260,23 @@ public class Pokemon {
 
     public void render(Graphics2D g, int i) {
         if (i == 0) {
+            
+            if(this.pokemon.equalsIgnoreCase("pikachu")){
             Sprite.drawImage(g, this.getSprite(i), new Vector2d(580, 180), 130, 140);
+            }
+            
+            if(this.pokemon.equalsIgnoreCase("charizard")){
+                Sprite.drawImage(g, this.getSprite(i), new Vector2d(550, 110), 160, 210);
+            }
         } else {
-            Sprite.drawImage(g, this.getSprite(i), new Vector2d(130, 300), 160, 180);
+            
+            if (this.pokemon.equalsIgnoreCase("pikachu")) {
+                Sprite.drawImage(g, this.getSprite(i), new Vector2d(130, 300), 160, 180);
+            } 
+            
+            if (this.pokemon.equalsIgnoreCase("charizard")){
+                Sprite.drawImage(g, this.getSprite(i), new Vector2d(105, 230), 300, 250);
+            }
         }
     }
 }

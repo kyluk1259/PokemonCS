@@ -35,8 +35,8 @@ public class Player extends Entity {
         super(sprite, origin, size);
         gsm = gs;
         this.addPokemon(pokedex.get(0));
-        this.addPokemon(pokedex.get(0));
-        this.addPokemon(pokedex.get(0));
+        this.addPokemon(pokedex.get(1));
+        this.addPokemon(pokedex.get(1));
         this.addBagItem(new Pokeballs("Ultra Ball"));
         this.addBagItem(new Potions("Hyper Potion"));
         this.addBagItem(new Pokeballs("Master Ball"));

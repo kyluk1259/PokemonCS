@@ -183,4 +183,10 @@ public abstract class Entity {
     public void addPokemon(Pokemon pkm) {
         pokemon.add(pkm);
     }
+    
+    public void swapPokemon(int i, int j){
+        Pokemon temp = pokemon.get(i);
+        pokemon.set(i, pokemon.get(j));
+        pokemon.set(j, temp);
+    }
 }
