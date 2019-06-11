@@ -7,6 +7,7 @@ package Entity;
 
 import GameState.GameStateManager;
 import static GameState.GameStateManager.BATTLESTATE;
+import static GameState.GameStateManager.MENUSTATE;
 import GameState.PlayState;
 import Graphics.Sprite;
 import Pokemon.Pokeballs;
@@ -110,9 +111,11 @@ public class Player extends Entity {
         //ADD
         if (openBag) {
             pause = true;
+            
             if (ani.hasPlayed(3)) {
                 ani.stopAnimating();
                 openBag = false;
+                gsm.add(MENUSTATE);
             }
         }
 
