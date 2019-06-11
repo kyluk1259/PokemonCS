@@ -208,5 +208,14 @@ public class Sprite {
         float y = pos.y;
         g.drawImage(image, (int) x, (int) y, width, height, null);
     }
+    
+    public static void drawImage(Graphics2D g, Sprite sprite, Vector2d pos, int width, int height) {
+        float x = pos.x;
+        float y = pos.y;
+
+        if (sprite != null) {
+            g.drawImage(sprite.getSpriteSheet(), (int) x, (int) y, width, height, null);
+        }
+    }
 
 }
