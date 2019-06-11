@@ -5,6 +5,7 @@
  */
 package GameState;
 
+import static GameState.PlayState.player;
 import Graphics.Font;
 import Graphics.Sprite;
 import Utility.KeyHandler;
@@ -26,6 +27,7 @@ public class MenuState extends GameState {
     private int money, flash, selection;
     private Sprite pokeBall, bag, save,exit;
     private Font Sprites;
+    private int bagItem;
     
 
     public MenuState(GameStateManager gsm) {
@@ -33,6 +35,7 @@ public class MenuState extends GameState {
         
         flash = 0;
         selection = 1;
+        bagItem = 0;
         
         pokemon = "Pokemon";
         pokeBall = new Sprite("Images/pokemonBall.png");
@@ -55,13 +58,24 @@ public class MenuState extends GameState {
     @Override
     public void input(KeyHandler key) {
         if(key.down.clicked){
-            
+//            if (y + 1 >= 1) {
+//                    y = 1;
+//                } else {
+//                    y += 1;
+//                }
             key.down.clicked = false;
         }
     }
 
     @Override
     public void render(Graphics2D g) {
+        menuBox (g);
+        
+        //Sprite.drawArray(g, font, playerName, new Vector2d(600, 150), 16, 16, 16, 0);
+        //Sprite.drawArray(g, font, moneyAmount, new Vector2d(600, 150), 16, 16, 16, 0);
+    }
+    
+    private void menuBox(Graphics2D g){
         //Rectangle
         g.setColor(Color.white);
         g.fillRect(600, 0, 240, 640);
@@ -104,8 +118,24 @@ public class MenuState extends GameState {
                 }
                 break;
         }
-        //Sprite.drawArray(g, font, playerName, new Vector2d(600, 150), 16, 16, 16, 0);
-        //Sprite.drawArray(g, font, moneyAmount, new Vector2d(600, 150), 16, 16, 16, 0);
+    }
+    private void bagBox(Graphics2D g) {
+        g.setColor(Color.black);
+        g.drawLine(300, 480, 300, 640);
+        if (flash != 0 && flash != 1) {
+            g.drawLine(540, 525, 540 + player.getBagItem(bagItem).getName().length() * 19, 525);
+            Sprite.drawArray(g, font, player.getBagItem(bagItem).getName(), new Vector2d(540, 500), 24, 24, 20, 0);
+        }
+        Sprite.drawArray(g, font, player.getBagItem(bagItem).getDescription(), new Vector2d(5, 500), 24, 24, 20, 0);
+        if (bagItem + 1 <= player.bagSize) {
+            Sprite.drawArray(g, font, player.getBagItem(bagItem + 1).getName(), new Vector2d(540, 535), 24, 24, 20, 0);
+        }
+        if (bagItem + 2 <= player.bagSize) {
+            Sprite.drawArray(g, font, player.getBagItem(bagItem + 2).getName(), new Vector2d(540, 570), 24, 24, 20, 0);
+        }
+        if (bagItem + 3 <= player.bagSize) {
+            Sprite.drawArray(g, font, player.getBagItem(bagItem + 3).getName(), new Vector2d(540, 605), 24, 24, 20, 0);
+        }
     }
     
 }
