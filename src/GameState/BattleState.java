@@ -456,7 +456,7 @@ public class BattleState extends GameState {
     private void pokemonBox(Graphics2D g) {
 
         g.setColor(Color.black);
-        g.drawLine(300, 480, 300, 640);
+        g.drawLine(390, 480, 390, 640);
         if (flash != 0 && flash != 1) {
             if (pokemonCount == 0) {
                 Sprite.drawArray(g, font, player.getPokemon(pokemonCount).getName(), new Vector2d(150, 500), 24, 24, 20, 0);
