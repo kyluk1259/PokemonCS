@@ -18,7 +18,6 @@ public abstract class GameState {
     
     protected GameStateManager gsm;
     protected Font font;
-    protected TileManager tm;
     
     
     public GameState(GameStateManager gsm){

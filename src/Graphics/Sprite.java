@@ -29,16 +29,17 @@ public class Sprite {
     public static float tx, ty;
     private int wSprite;
     private int hSprite;
+    public String file;
 
     public Sprite(String fileName) {
-        w = SIZE;
-        h = SIZE;
+        w = 38;
+        h = 38;
 
         System.out.println("Loading: " + fileName + "...");
         SPRITESHEET = loadSprite(fileName);
 
-        wSprite = SPRITESHEET.getWidth() / w;
-        hSprite = SPRITESHEET.getHeight() / h;
+        wSprite = SPRITESHEET.getWidth() / 38;
+        hSprite = SPRITESHEET.getHeight() / 38;
         loadSpriteArray();
 
     }
@@ -46,6 +47,7 @@ public class Sprite {
     public Sprite(String fileName, int w, int h) {
         this.w = w;
         this.h = h;
+        this.file = fileName;
 
         System.out.println("Loading: " + fileName + "...");
         SPRITESHEET = loadSprite(fileName);
