@@ -8,9 +8,11 @@ package GameState;
 import static GameState.PlayState.player;
 import Graphics.Background;
 import Graphics.Sprite;
+import Pokemon.Pokeballs;
 import Pokemon.Pokedex;
 import static Pokemon.Pokedex.pokedex;
 import Pokemon.Pokemon;
+import Pokemon.Potions;
 import Utility.KeyHandler;
 import Utility.Vector2d;
 import java.awt.Color;
@@ -32,6 +34,7 @@ public class BattleState extends GameState {
     private String text, lastMoveUsed;
     private String[] strings;
     private Pokemon wildPokemon, playerPokemon;
+    private boolean useItem;
 
     public BattleState(GameStateManager gsm) {
         super(gsm);
@@ -49,6 +52,7 @@ public class BattleState extends GameState {
         pokemonMenu = false;
         bagMenu = false;
         displayingText = true;
+        useItem = false;
 
         scale = 0;
         count = 50;
@@ -131,7 +135,7 @@ public class BattleState extends GameState {
             pokemonMenu = false;
             key.B.clicked = false;
         }
-
+        
         if (displayingText) {
             if (key.A.clicked) {
                 interact = true;
@@ -186,8 +190,65 @@ public class BattleState extends GameState {
                 key.right.clicked = false;
             }
         }
+        
+        if(useItem){
+            if (key.A.clicked) {
+                player.getBagItem(bagItem).useItem(pokemonCount);
+                player.removeBagItem(bagItem);
+                player.bagSize -= 1;
+                useItem = false;
+                inMenu = true;
+                key.A.clicked = false;
+            }
+            
+              if (key.up.clicked) {
+                if (pokemonCount - 1 < 0) {
+                    pokemonCount = player.pokemonCount;
+                } else {
+                    pokemonCount -= 1;
+                    System.out.println(pokemonCount);
+                }
+                key.up.clicked = false;
+            }
+
+            if (key.down.clicked) {
+                if (pokemonCount + 1 > player.pokemonCount) {
+                    pokemonCount = 0;
+                } else {
+                    pokemonCount += 1;
+                    System.out.println(pokemonCount);
+                }
+                key.down.clicked = false;
+            }
+
+            if (key.right.clicked && pokemonCount == 0) {
+                pokemonCount = 1;
+                key.right.clicked = false;
+            }
+
+            if (key.left.clicked && pokemonCount != 0) {
+                pokemonCount = 0;
+                key.left.clicked = false;
+            }
+        }
 
         if (bagMenu) {
+            
+            if (key.A.clicked) {
+                if (player.getBagItem(bagItem).getClass().equals(Potions.class)){
+                    useItem = true;
+                    bagMenu = false;
+                    key.A.clicked = false;
+                }else if(player.getBagItem(bagItem).getClass().equals(Pokeballs.class)){
+                    player.getBagItem(bagItem).useItem(wildPokemon);
+                    player.removeBagItem(bagItem);
+                    player.bagSize -= 1;
+                    bagMenu = false;
+                    inMenu = true;
+                }
+                key.A.clicked = false;
+            }
+            
             if (key.up.clicked) {
                 if (bagItem - 1 <= 0) {
                     bagItem = 0;
@@ -200,7 +261,6 @@ public class BattleState extends GameState {
             if (key.down.clicked) {
                 if (bagItem + 1 >= player.bagSize) {
                     bagItem = player.bagSize;
-                    System.out.println("clicked");
                 } else {
                     bagItem += 1;
                     System.out.println(bagItem);
@@ -348,6 +408,12 @@ public class BattleState extends GameState {
                 }
 
                 if (pokemonMenu == true) {
+                    playerBar(g);
+                    opponentBar(g);
+                    pokemonBox(g);
+                }
+                
+                if(useItem == true){
                     playerBar(g);
                     opponentBar(g);
                     pokemonBox(g);

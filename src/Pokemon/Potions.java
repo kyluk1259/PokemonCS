@@ -5,26 +5,40 @@
  */
 package Pokemon;
 
+import static GameState.PlayState.player;
+
 /**
  *
  * @author Kyle's PC
  */
 public class Potions extends Item {
-    
-    public Potions(String item){
+
+    public Potions(String item) {
         super(item);
-    if(item.equalsIgnoreCase("Hyper Potion")){
+        if (item.equalsIgnoreCase("Hyper Potion")) {
             newHyperPotion();
-        }else if(item.equalsIgnoreCase("Full Restore")){
+        } else if (item.equalsIgnoreCase("Full Restore")) {
             newFullRestore();
         }
     }
-    
-    private void newHyperPotion(){
+
+    private void newHyperPotion() {
         itemDescription = "Heal a pokemon\nfor 200HP.";
+        heal = 200;
     }
-    
-    private void newFullRestore(){
+
+    private void newFullRestore() {
         itemDescription = "Fully heal\nand cure\n a pokemon.";
+        // heal = (player.getPokemon(0).getMaxHp()) - (player.getPokemon(0).getHp());
+    }
+
+    public void useItem(int i) {
+        if ((player.getPokemon(i).getHp() + heal) <= (player.getPokemon(i).getMaxHp())) {
+            player.getPokemon(i).setHp(heal);
+            System.out.println("Over");
+        } else {
+            player.getPokemon(i).setHp(player.getPokemon(i).getMaxHp() - player.getPokemon(i).getHp());
+            System.out.println("Under");
+        }
     }
 }

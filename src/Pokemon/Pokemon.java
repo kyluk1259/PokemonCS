@@ -260,21 +260,21 @@ public class Pokemon {
 
     public void render(Graphics2D g, int i) {
         if (i == 0) {
-            
-            if(this.pokemon.equalsIgnoreCase("pikachu")){
-            Sprite.drawImage(g, this.getSprite(i), new Vector2d(580, 180), 130, 140);
+
+            if (this.pokemon.equalsIgnoreCase("pikachu")) {
+                Sprite.drawImage(g, this.getSprite(i), new Vector2d(580, 180), 130, 140);
             }
-            
-            if(this.pokemon.equalsIgnoreCase("charizard")){
+
+            if (this.pokemon.equalsIgnoreCase("charizard")) {
                 Sprite.drawImage(g, this.getSprite(i), new Vector2d(550, 110), 160, 210);
             }
         } else {
-            
+
             if (this.pokemon.equalsIgnoreCase("pikachu")) {
                 Sprite.drawImage(g, this.getSprite(i), new Vector2d(130, 300), 160, 180);
-            } 
-            
-            if (this.pokemon.equalsIgnoreCase("charizard")){
+            }
+
+            if (this.pokemon.equalsIgnoreCase("charizard")) {
                 Sprite.drawImage(g, this.getSprite(i), new Vector2d(105, 230), 300, 250);
             }
         }

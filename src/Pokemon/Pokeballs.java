@@ -9,22 +9,30 @@ package Pokemon;
  *
  * @author Kyle's PC
  */
-public class Pokeballs extends Item{
-    
-    public Pokeballs(String item){
+public class Pokeballs extends Item {
+
+    public Pokeballs(String item) {
         super(item);
-        if(item.equalsIgnoreCase("Ultra Ball")){
+        if (item.equalsIgnoreCase("Ultra Ball")) {
             newUltraBall();
-        }else if(item.equalsIgnoreCase("Master Ball")){
+        } else if (item.equalsIgnoreCase("Master Ball")) {
             newMasterBall();
         }
     }
-    
-    private void newUltraBall(){
+
+    private void newUltraBall() {
         itemDescription = "Higher Catch\nRate than a\ngreat ball.";
+        captureChance = 2;
     }
-    
-    private void newMasterBall(){
+
+    private void newMasterBall() {
         itemDescription = "Guaranteed\ncapture of\n a pokemon.";
+        captureChance = 2;
+    }
+
+    public void useItem(Pokemon p) {
+        float capture = p.getCaptureRate();
+        
+        capture = capture*captureChance;
     }
 }

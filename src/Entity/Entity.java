@@ -175,6 +175,9 @@ public abstract class Entity {
     public void addBagItem(Item item) {
             playerBag.add(item);
     }
+    public void removeBagItem(int i) {
+            playerBag.remove(i);
+    }
 
     public Pokemon getPokemon(int i) {
         return pokemon.get(i);

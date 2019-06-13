@@ -12,22 +12,30 @@ import static GameState.PlayState.player;
  * @author Kyle's PC
  */
 public abstract class Item {
+
     protected String name, itemDescription;
     protected int heal;
     protected Status cure;
     protected float captureChance;
     protected int salePrice;
     protected int purchasePrice;
-    
-    public Item(String item){
+
+    public Item(String item) {
         name = item;
     }
-    
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    
-    public String getDescription(){
+
+    public String getDescription() {
         return itemDescription;
+    }
+
+    public void useItem(int i) {
+    }
+    
+    public void useItem(Pokemon p) {
+
     }
 }
