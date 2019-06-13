@@ -8,6 +8,7 @@ package GameState;
 import Graphics.Font;
 import Utility.KeyHandler;
 import java.awt.Graphics2D;
+import Map.TileManager;
 
 /**
  *
@@ -17,6 +18,7 @@ public abstract class GameState {
     
     protected GameStateManager gsm;
     protected Font font;
+    protected TileManager tm;
     
     
     public GameState(GameStateManager gsm){
