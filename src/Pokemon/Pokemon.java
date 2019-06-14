@@ -262,12 +262,21 @@ public class Pokemon {
         if (i == 0) {
             
             if(this.pokemon.equalsIgnoreCase("pikachu")){
-            Sprite.drawImage(g, this.getSprite(i), new Vector2d(580, 180), 130, 140);
+            Sprite.drawImage(g, this.getSprite(i), new Vector2d(560, 180), 130, 140);
             }
             
             if(this.pokemon.equalsIgnoreCase("charizard")){
                 Sprite.drawImage(g, this.getSprite(i), new Vector2d(550, 110), 160, 210);
             }
+            
+            if(this.pokemon.equalsIgnoreCase("weavile")){
+            Sprite.drawImage(g, this.getSprite(i), new Vector2d(560, 140), 130, 160);
+            }
+            
+             if(this.pokemon.equalsIgnoreCase("scizor")){
+            Sprite.drawImage(g, this.getSprite(i), new Vector2d(560, 110), 130, 180);
+            }
+            
         } else {
             
             if (this.pokemon.equalsIgnoreCase("pikachu")) {
@@ -276,6 +285,14 @@ public class Pokemon {
             
             if (this.pokemon.equalsIgnoreCase("charizard")){
                 Sprite.drawImage(g, this.getSprite(i), new Vector2d(105, 230), 300, 250);
+            }
+            
+            if(this.pokemon.equalsIgnoreCase("weavile")){
+            Sprite.drawImage(g, this.getSprite(i), new Vector2d(130, 280), 180, 200);
+            }
+            
+            if(this.pokemon.equalsIgnoreCase("scizor")){
+            Sprite.drawImage(g, this.getSprite(i), new Vector2d(130, 230), 210, 230);
             }
         }
     }

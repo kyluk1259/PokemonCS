@@ -67,7 +67,7 @@ public class BattleState extends GameState {
         currentBackground = battleBackground;
 
         playerPokemon = player.getPokemon(0);
-        wildPokemon =  Pokedex.generatePokemon(1);
+        wildPokemon = Pokedex.generatePokemon(1);
 
         //lastMoveUsed = playerPokemon.getMove(0).getName();
         strings = new String[]{"You are challenged by PKMN Trainer Kyle.",
@@ -239,8 +239,8 @@ public class BattleState extends GameState {
                 pokemonCount = 0;
                 key.left.clicked = false;
             }
-            
-            if(key.A.clicked){
+
+            if (key.A.clicked) {
                 playerPokemon = player.getPokemon(pokemonCount);
                 player.swapPokemon(0, pokemonCount);
                 inMenu = true;

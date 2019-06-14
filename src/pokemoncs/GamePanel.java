@@ -35,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable {
     //images
     private BufferedImage image;
     private Graphics2D g;
-    private Pokedex loadWildPokemon, loadPlayerPokemon, loadTrainerPokemon;
+    private Pokedex pokemonPokedex;
 
     //input method
     private KeyHandler key;
@@ -66,9 +66,7 @@ public class GamePanel extends JPanel implements Runnable {
         image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         g = (Graphics2D) image.getGraphics();
         key = new KeyHandler(this); //initialize key handler
-        loadWildPokemon = new Pokedex();
-        loadPlayerPokemon = new Pokedex();
-        loadTrainerPokemon = new Pokedex();
+        pokemonPokedex = new Pokedex();
 
         gsm = new GameStateManager();
     }
