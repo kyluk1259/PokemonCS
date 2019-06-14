@@ -8,6 +8,7 @@ package GameState;
 import Graphics.Font;
 import Utility.KeyHandler;
 import java.awt.Graphics2D;
+import Map.TileManager;
 
 /**
  *
