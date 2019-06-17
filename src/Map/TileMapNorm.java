@@ -22,10 +22,10 @@ public class TileMapNorm extends TileMap {
         blocks = new ArrayList<Block>();
         
         String[] block = data.split(",");
-        for(int i = 0; i < (width*height)-2; i++){
+        for(int i = 0; i < (width*height); i++){
             int temp = Integer.parseInt(block[i].replaceAll("\\s+", ""));
             if(temp != 0){
-                blocks.add(new NormBlock(sprite.getSprite((int)((temp - 1)%tileColumns), (int)((temp - 1)/tileColumns)), new Vector2d((int) ((i % width) * tileWidth)+840, (int) (int)((i / height)*tileHeight)+640), tileWidth, tileHeight));
+                blocks.add(new NormBlock(sprite.getSprite((int)((temp - 1)%tileColumns), (int)((temp - 1)/tileColumns)), new Vector2d((int) ((i % width) * tileWidth), (int) (int)((i / height)*tileHeight)), tileWidth, tileHeight));
             }
         }
     }

@@ -49,8 +49,9 @@ public abstract class Entity {
     protected float dx;
     protected float dy;
 
-    protected int moveSpeed;
-    protected int stopSpeed;
+    protected double maxSpeed = 1;
+    protected double moveSpeed = 0.03f;
+    protected double stopSpeed = 100f;
 
     protected AABB hitBounds;
     protected AABB bounds;
@@ -113,11 +114,11 @@ public abstract class Entity {
             if (currentAnimation != DOWN || ani.getDelay() == -1) {
                 setAnimation(DOWN, sprite.getMainSpriteArray(DOWN), 10);
             }
-        } else if (right) {
+        } else if (left) {
             if (currentAnimation != RIGHT || ani.getDelay() == -1) {
                 setAnimation(RIGHT, sprite.getMainSpriteArray(RIGHT), 10);
             }
-        } else if (left) {
+        } else if (right) {
             if (currentAnimation != LEFT || ani.getDelay() == -1) {
                 setAnimation(LEFT, sprite.getMainSpriteArray(LEFT), 10);
             }
@@ -160,6 +161,18 @@ public abstract class Entity {
             setInteractDirection();
             ani.update();
         }
+
+        if (dx > maxSpeed) {
+            dx = (float) maxSpeed;
+        } else if (dx < ((-1) * maxSpeed)) {
+            dx = (float) ((-1) * maxSpeed);
+        }
+
+        if (dy > maxSpeed) {
+            dy = (float) maxSpeed;
+        } else if (dy < ((-1) * maxSpeed)) {
+            dy = (float) ((-1) * maxSpeed);
+        }   
     }
 
     public abstract void render(Graphics2D g);
@@ -173,7 +186,7 @@ public abstract class Entity {
     }
 
     public void addBagItem(Item item) {
-            playerBag.add(item);
+        playerBag.add(item);
     }
 
     public Pokemon getPokemon(int i) {
@@ -183,8 +196,8 @@ public abstract class Entity {
     public void addPokemon(Pokemon pkm) {
         pokemon.add(pkm);
     }
-    
-    public void swapPokemon(int i, int j){
+
+    public void swapPokemon(int i, int j) {
         Pokemon temp = pokemon.get(i);
         pokemon.set(i, pokemon.get(j));
         pokemon.set(j, temp);
