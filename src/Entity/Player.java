@@ -62,6 +62,11 @@ public class Player extends Entity {
     public void move() {
         if (sprint) {
             sprite = runSprite;
+            moveSpeed = 0.01;
+            maxSpeed = 1.5;
+        }else{
+            maxSpeed = 1;
+            moveSpeed = 0.005;
         }
 
         if (up) {
@@ -153,9 +158,10 @@ public class Player extends Entity {
     public void update() {
         super.update();
         move();
-        renderImage = ani.getImage();
         pos.x += dx;
         pos.y += dy;
+        renderImage = ani.getImage();
+        
     }
 
     public void input(KeyHandler key) {
@@ -173,15 +179,15 @@ public class Player extends Entity {
         }
 
         if (key.right.down && !pause) {
-            left = true;
-        } else {
-            left = false;
-        }
-
-        if (key.left.down && !pause) {
             right = true;
         } else {
             right = false;
+        }
+
+        if (key.left.down && !pause) {
+            left = true;
+        } else {
+            left = false;
         }
 
         if (key.A.clicked && !pause) {

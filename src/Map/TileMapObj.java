@@ -26,7 +26,7 @@ public class TileMapObj extends TileMap {
         
         String[] block = data.split(",");
         
-        for(int i = 0; i < (width*height)-2; i++){
+        for(int i = 0; i < (width*height); i++){
             int temp = Integer.parseInt(block[i].replaceAll("\\s+", ""));
             /*
             if((int)((temp - 1)/tileColumns) > 3261){
@@ -35,9 +35,9 @@ public class TileMapObj extends TileMap {
 */
             if(temp != 0){
                 if(temp == 172){
-                    tempBlock = new HoleBlock(sprite.getSprite((int)((temp - 1)%tileColumns), (int)((temp - 1)/tileColumns)),new Vector2d((int)((i % width) * tileWidth)+840, (int)((i / height)*tileHeight)+640),tileWidth, tileHeight);
+                    tempBlock = new HoleBlock(sprite.getSprite((int)((temp - 1)%tileColumns), (int)((temp - 1)/tileColumns)),new Vector2d((int)((i % width) * tileWidth), (int)((i / height)*tileHeight)),tileWidth, tileHeight);
                 }else{
-                    tempBlock = new ObjBlock(sprite.getSprite((int)((temp - 1)%tileColumns), (int)((temp - 1)/tileColumns)),new Vector2d((int)((i % width) * tileWidth)+840, (int)(int)((i / height)*tileHeight)+640),tileWidth, tileHeight);
+                    tempBlock = new ObjBlock(sprite.getSprite((int)((temp - 1)%tileColumns), (int)((temp - 1)/tileColumns)),new Vector2d((int)((i % width) * tileWidth), (int)(int)((i / height)*tileHeight)),tileWidth, tileHeight);
                 }
                 tmo_blocks.put(String.valueOf((int)(i%width)) + "," + String.valueOf((int)(i/height)), tempBlock);
             }

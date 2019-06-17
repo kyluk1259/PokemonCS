@@ -5,7 +5,6 @@
  */
 package GameState;
 
-
 import Entity.Player;
 import Graphics.Sprite;
 import Map.TileManager;
@@ -13,7 +12,6 @@ import Utility.KeyHandler;
 import Utility.Vector2d;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
 import pokemoncs.GamePanel;
 
 /**
@@ -21,7 +19,7 @@ import pokemoncs.GamePanel;
  * @author Kyle's PC
  */
 public class PlayState extends GameState {
-    
+
     public static Player player;
     public Sprite sprite;
     private TileManager tm;
@@ -30,46 +28,47 @@ public class PlayState extends GameState {
     public static int index = 0;
     private float xStart;
 
-    
+    public static Vector2d world;
+
     public PlayState(GameStateManager gsm) {
         super(gsm);
-        
+        world = new Vector2d();
+        Vector2d.setWorldVar(world.x, world.y);
         float posx = (int) ((GamePanel.getW() / 2) - (38));
         float posy = (int) ((GamePanel.getH() / 2) - (38));
-        
+
         tm = new TileManager("tileMaps/start.tmx");
-        player = new Player(new Sprite("Sprites/playerwalking.png", 38, 38), new Vector2d(posx, posy), 80, gsm);
-        sprite = new Sprite("TileSets/transparenttileset.png", 10, 10);
+        player = new Player(new Sprite("Sprites/playerwalking.png", 38, 38), new Vector2d(0 + posx, 0 + posy), 80, gsm);
         float x = 0;
         float y = GamePanel.getH();
-        
-        
-        
+
         loadText = false;
         index = 0;
         xStart = 25;
         pause = false;
         textComplete = false;
-        
+
+        try {
+            Thread.sleep(2500);
+        } catch (InterruptedException e) {}
     }
-    
+
     public void update() {
         if (pause != true) {
             player.update();
         }
     }
-    
+
     public void input(KeyHandler key) {
         if (pause != true) {
             player.input(key);
         }
     }
-    
+
     public void render(Graphics2D g) {
-       tm.render(g);
+
         if (pause != true) {
-            
-            //g.drawImage(sprite.getSprite(37, 1), 0, 0, 50, 50, null);
+            tm.render(g);
             player.render(g);
             g.setColor(Color.red);
             g.drawLine(420, 0, 420, 640);
