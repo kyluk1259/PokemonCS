@@ -21,7 +21,8 @@ public class HoleBlock extends Block {
         super(img, pos, w, h);
     }
 
-    public boolean update(AABB a) {
+    
+    public boolean update(AABB p) {
         return false;
     }
     
@@ -30,6 +31,4 @@ public class HoleBlock extends Block {
         g.setColor(Color.green);
         g.drawRect((int) pos.getWorldVar().x, (int) pos.getWorldVar().y, w, h);
     }
-    
-    
 }

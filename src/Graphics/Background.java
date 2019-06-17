@@ -55,15 +55,23 @@ public class Background {
 
         try {
             temp = ImageIO.read(getClass().getClassLoader().getResourceAsStream(fileName));
+            image = temp.getSubimage(x, y, w, h);
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Background '"+ fileName + "' Could Not Be Loaded");
+            System.exit(0);
         }
-        image = temp.getSubimage(x, y, w, h);
+        
         return image;
     }
     
     public BufferedImage getBackground(){
         return background;
+    }
+    
+     public BufferedImage getBackground(int x, int y, int w, int h){
+        BufferedImage sub = background.getSubimage(x*w, y*h, w, h);
+        return sub;
     }
     
     public static void drawImage(Graphics2D g, BufferedImage image, Vector2d pos,int xOff, int yOff) {
