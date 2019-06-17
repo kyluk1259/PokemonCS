@@ -4,17 +4,17 @@
  * and open the template in the editor.
  */
 package Map;
-
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-
 import Utility.Vector2d;
 import Utility.AABB;
+
 /**
  *
  * @author Kyle's PC
  */
 public abstract class Block {
+    
     protected int w;
     protected int h;
     
@@ -28,7 +28,7 @@ public abstract class Block {
         this.h = h;
     }
     
-    public abstract boolean update(AABB a);
+    public abstract boolean update(AABB p);
     
     public void render(Graphics2D g){
         g.drawImage(img, (int) pos.getWorldVar().x, (int) pos.getWorldVar().y, w, h, null);

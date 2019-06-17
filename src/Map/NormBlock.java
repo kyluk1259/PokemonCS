@@ -7,9 +7,8 @@ package Map;
 
 import Utility.AABB;
 import Utility.Vector2d;
-import java.awt.image.BufferedImage;
 import java.awt.Graphics2D;
-
+import java.awt.image.BufferedImage;
 
 /**
  *
@@ -21,8 +20,8 @@ public class NormBlock extends Block {
         super(img, pos, w, h);
     }
 
- 
-    public boolean update(AABB a) {
+
+    public boolean update(AABB p) {
         return false;
     }
     

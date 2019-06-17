@@ -6,7 +6,6 @@
 package Map;
 
 import Graphics.Sprite;
-import Utility.Vector2d.*;
 import java.awt.Graphics2D;
 import java.io.File;
 import java.util.ArrayList;
@@ -19,88 +18,88 @@ import org.w3c.dom.NodeList;
 
 /**
  *
- * @author kyleluka
+ * @author Kyle's PC
  */
 public class TileManager {
 
     public static ArrayList<TileMap> tm;
 
-    public TileManager(String file) {
+    public TileManager() {
         tm = new ArrayList<TileMap>();
-        //Size of every tile from file
-        addTileMap(file, 50, 50);
     }
 
-    private void addTileMap(String file, int bw, int bh) {
+    public TileManager(String path) {
+        tm = new ArrayList<TileMap>();
+        addTileMap(path, 20, 20);
+    }
 
-        String tileImageTSX, tileImage;
-        int tileWidth, tileHeight, tileCount, tileColumns;
+    private void addTileMap(String path, int blockWidth, int blockHeight) {
+        String imagePath, imagePathTSX, name;
+
         int width = 0;
         int height = 0;
+        int tileWidth;
+        int tileHeight;
+        int tileCount;
+        int tileColumns;
         int layers = 0;
-        Sprite tileSprite;
-
-        String[] data = new String[15];
+        Sprite sprite;
 
         try {
-            DocumentBuilderFactory builderF = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = builderF.newDocumentBuilder();
-            Document document = builder.parse(new File(getClass().getClassLoader().getResource(file).toURI()));
-            document.normalize();
+            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = builderFactory.newDocumentBuilder();
+            Document doc = builder.parse(new File(getClass().getClassLoader().getResource(path).toURI()));
+            doc.getDocumentElement().normalize();
 
-            NodeList list = document.getElementsByTagName("tileset");
+            NodeList list = doc.getElementsByTagName("tileset");
             Node node = list.item(0);
-            Element ele = (Element) node;
+            Element eElement = (Element) node;
 
-            tileImageTSX = ele.getAttribute("source");
-            tileImage = tileImageTSX.substring(0, tileImageTSX.length() - 4);
+            imagePathTSX = eElement.getAttribute("source");
+            imagePath = imagePathTSX.substring(0, imagePathTSX.length()-4);
 
-            list = document.getElementsByTagName("map");
+            list = doc.getElementsByTagName("map");
             node = list.item(0);
-            ele = (Element) node;
+            eElement = (Element)node;
 
-            tileWidth = Integer.parseInt(ele.getAttribute("tilewidth"));
-            tileHeight = Integer.parseInt(ele.getAttribute("tileheight"));
-            width = Integer.parseInt(ele.getAttribute("width"));
-            height = Integer.parseInt(ele.getAttribute("height"));
-            System.out.println(width + " / " + height);
+            tileWidth = Integer.parseInt(eElement.getAttribute("tilewidth"));
+            tileHeight = Integer.parseInt(eElement.getAttribute("tileheight"));
+            tileColumns = Integer.parseInt(eElement.getAttribute("columns"));
+            sprite = new Sprite("TileSets/" + imagePath + ".png", tileWidth, tileHeight);
 
-            tileSprite = new Sprite("TileSets/" + tileImage + ".png",  tileWidth, tileHeight);
-
-            System.out.println(tileSprite.getWidth());
-
-            tileColumns = (tileSprite.getSpriteSheet().getWidth() / (tileWidth));
-            tileCount = tileColumns * (tileSprite.getSpriteSheet().getHeight() / (tileHeight));
-
-            list = document.getElementsByTagName("layer");
+            list = doc.getElementsByTagName("layer");
             layers = list.getLength();
-            System.out.println(tileColumns);
-
-            for (int i = 0; i < layers; i++) {
+            String[] data = new String[layers];
+            
+            for(int i=0; i<layers; i++){
                 node = list.item(i);
-                ele = (Element) node;
-
-                data[i] = ele.getElementsByTagName("data").item(0).getTextContent();
-                System.out.println("Successfully loaded " + file + " layer #" + i + data[i]);
-
-                if (i >= 1) {
-                    tm.add(new TileMapNorm(data[i], tileSprite, width, height, tileWidth, tileHeight, tileColumns));
-                } else {
-                    tm.add(new TileMapObj(data[i], tileSprite, width, height, tileWidth, tileHeight, tileColumns));
+                eElement = (Element)node;
+                if(i <= 0){
+                    width = Integer.parseInt(eElement.getAttribute("width"));
+                    height = Integer.parseInt(eElement.getAttribute("height"));
                 }
+                
+                data[i] = eElement.getElementsByTagName("data").item(0).getTextContent();
+                name = eElement.getAttribute("name");
+                
+                if(i >= 1){
+                    tm.add(new TileMapNorm(data[i], sprite, width, height, blockWidth, blockHeight, tileColumns));
+                }else if(i <= 1){
+                    tm.add(new TileMapObj(data[i], sprite, width, height, blockWidth, blockHeight, tileColumns));
+                }
+                
+                System.out.println("Layer #" + i + ":\n" + data[i]);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("ERROR TileManager: Couldn't Load TileMap");
+            System.out.println("ERROR TileManager: Couldn't load tilemap");
         }
-
     }
-
-    public void render(Graphics2D g) {
-        for (int i = 0; i < tm.size(); i++) {
+    
+    public void render(Graphics2D g){
+        for(int i=0; i<tm.size(); i++){
             tm.get(i).render(g);
         }
     }
-
 }

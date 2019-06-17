@@ -5,15 +5,15 @@
  */
 package GameState;
 
+
 import Entity.Player;
-import Graphics.Background;
-import Graphics.Font;
 import Graphics.Sprite;
 import Map.TileManager;
 import Utility.KeyHandler;
 import Utility.Vector2d;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import pokemoncs.GamePanel;
 
 /**
@@ -23,12 +23,13 @@ import pokemoncs.GamePanel;
 public class PlayState extends GameState {
     
     public static Player player;
-    public static TileManager tm;
+    public Sprite sprite;
+    private TileManager tm;
     public static boolean loadText, textComplete, pause;
     public static String text;
     public static int index = 0;
     private float xStart;
-    private float x;
+
     
     public PlayState(GameStateManager gsm) {
         super(gsm);
@@ -36,8 +37,13 @@ public class PlayState extends GameState {
         float posx = (int) ((GamePanel.getW() / 2) - (38));
         float posy = (int) ((GamePanel.getH() / 2) - (38));
         
-        tm = new TileManager("tileMaps/Challengers Basin.tmx");
+        tm = new TileManager("tileMaps/start.tmx");
         player = new Player(new Sprite("Sprites/playerwalking.png", 38, 38), new Vector2d(posx, posy), 80, gsm);
+        sprite = new Sprite("TileSets/transparenttileset.png", 10, 10);
+        float x = 0;
+        float y = GamePanel.getH();
+        
+        
         
         loadText = false;
         index = 0;
@@ -60,8 +66,10 @@ public class PlayState extends GameState {
     }
     
     public void render(Graphics2D g) {
+       tm.render(g);
         if (pause != true) {
-            tm.render(g);
+            
+            //g.drawImage(sprite.getSprite(37, 1), 0, 0, 50, 50, null);
             player.render(g);
             g.setColor(Color.red);
             g.drawLine(420, 0, 420, 640);
