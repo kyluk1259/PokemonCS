@@ -17,19 +17,21 @@ import java.awt.image.BufferedImage;
  */
 public class ObjBlock extends Block {
 
-    public ObjBlock(BufferedImage img, Vector2d pos, int w, int h) {
-        super(img, pos, w, h);
-    }
 
+    public ObjBlock(BufferedImage img, Vector2d pos, int w, int h, int x, int y) {
+        super(img, pos, w, h, x, y);
+    }
 
     public boolean update(AABB p) {
         return true;
     }
-    
-    public void render(Graphics2D g){
+
+    public void render(Graphics2D g) {
         super.render(g);
-        g.setColor(Color.white);
+        g.setColor(Color.green);
         g.drawRect((int) pos.getWorldVar().x, (int) pos.getWorldVar().y, w, h);
+        //g.setColor(Color.red);
+        //g.drawString(x + "/" + y, (int) pos.getWorldVar().x, (int) pos.getWorldVar().y);
     }
-    
+   
 }

@@ -21,16 +21,29 @@ public abstract class Block {
     protected BufferedImage img;
     protected Vector2d pos;
     
-    public Block(BufferedImage img, Vector2d pos, int w, int h){
+    protected int x;
+    protected int y;
+    
+    public Block(BufferedImage img, Vector2d pos, int w, int h, int x, int y){
         this.img = img;
         this.pos = pos;
         this.w = w;
         this.h = h;
+        this.x = x;
+        this.y = y;
     }
     
     public abstract boolean update(AABB p);
     
     public void render(Graphics2D g){
         g.drawImage(img, (int) pos.getWorldVar().x, (int) pos.getWorldVar().y, w, h, null);
+    }
+    
+     public int getX(){
+        return x;
+    }
+
+    public int getY(){
+        return y;
     }
 }

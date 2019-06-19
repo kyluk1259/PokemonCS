@@ -50,7 +50,7 @@ public abstract class Entity {
     protected float dy;
 
     protected double maxSpeed = 1;
-    protected double moveSpeed = 0.03f;
+    protected double moveSpeed = 0.005;
     protected double stopSpeed = 100f;
 
     protected AABB hitBounds;
@@ -201,5 +201,13 @@ public abstract class Entity {
         Pokemon temp = pokemon.get(i);
         pokemon.set(i, pokemon.get(j));
         pokemon.set(j, temp);
+    }
+    
+    public int getXPosition(){
+        return (int)((2*((bounds.getPos().x + dx) + bounds.getXOff()) / 38));
+    }
+    
+    public int getYPosition(){
+        return (int)((2*(bounds.getPos().y + dy) + bounds.getYOff()) / 38);       
     }
 }

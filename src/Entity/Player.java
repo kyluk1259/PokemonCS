@@ -15,6 +15,7 @@ import static Pokemon.Pokedex.pokedex;
 import Pokemon.Potions;
 import Utility.KeyHandler;
 import Utility.Vector2d;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 
@@ -56,15 +57,18 @@ public class Player extends Entity {
         this.addBagItem(new Potions("Full Restore"));
         bagSize = playerBag.size() - 1;
         pokemonCount = pokemon.size() - 1;
-                
+        bounds.setWidth(30);
+        bounds.setHeight(30);
+        bounds.setXOff(24);
+        bounds.setYOff(38);
     }
 
     public void move() {
         if (sprint) {
             sprite = runSprite;
-            moveSpeed = 0.01;
+            moveSpeed = 0.05;
             maxSpeed = 1.5;
-        }else{
+        } else {
             maxSpeed = 1;
             moveSpeed = 0.005;
         }
@@ -116,7 +120,7 @@ public class Player extends Entity {
         //ADD
         if (openBag) {
             pause = true;
-            
+
             if (ani.hasPlayed(3)) {
                 ani.stopAnimating();
                 openBag = false;
@@ -158,10 +162,16 @@ public class Player extends Entity {
     public void update() {
         super.update();
         move();
-        pos.x += dx;
-        pos.y += dy;
+        if (!bounds.collisionTile(dx, 0) && !bounds.outsideMap(dx, 0)) {
+            PlayState.world.x += dx;
+            pos.x += dx;
+        }
+
+        if (!bounds.collisionTile(0, dy) && !bounds.outsideMap(0, dy)) {
+            PlayState.world.y += dy;
+            pos.y += dy;
+        }
         renderImage = ani.getImage();
-        
     }
 
     public void input(KeyHandler key) {
@@ -216,6 +226,8 @@ public class Player extends Entity {
     }
 
     public void render(Graphics2D g) {
-        g.drawImage(renderImage, (int) (pos.x), (int) (pos.y), size, size, null);
+        g.setColor(Color.blue);
+        g.drawRect((int) (pos.getWorldVar().x + bounds.getXOff()), (int) (pos.getWorldVar().y + bounds.getYOff()), (int)bounds.getWidth(), (int)bounds.getHeight());
+        g.drawImage(renderImage, (int) (pos.getWorldVar().x), (int) (pos.getWorldVar().y), size, size, null);
     }
 }

@@ -6,6 +6,8 @@
 package Utility;
 
 import Entity.Entity;
+import Map.TileMapNorm;
+import Map.TileMapObj;
 
 /**
  *
@@ -85,6 +87,14 @@ public class AABB {
         yOff = f;
     }
 
+    public float getXOff() {
+        return xOff;
+    }
+
+    public float getYOff() {
+        return yOff;
+    }
+
     //MAIN COLLISION MATH
     public boolean collides(AABB bBox) {
         float ax = ((pos.getWorldVar().x + (xOff)) + (w / 2));
@@ -113,5 +123,35 @@ public class AABB {
         }
 
         return false;
+    }
+
+    public boolean collisionTile(float ax, float ay) {
+        for (int c = 0; c < 4; c++) {
+
+            int xt = (int) ((2 * (((pos.x + ax) + (c % 2) * xOff + xOff) / 38)));
+            int yt = (int) ((2 * ((pos.y + ay) + ((int) (c / 2)) * h + 20) / 38));
+            for (int i = 0; i < TileMapObj.blocks.size(); i++) {
+                if (((xt - 1 == TileMapObj.blocks.get(i).getX()) && (yt == TileMapObj.blocks.get(i).getY()))) {
+                    System.out.println("Collision: " + xt + "/" + yt);
+                    return TileMapObj.blocks.get(i).update(this);
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean outsideMap(float ax, float ay) {
+        for (int c = 0; c < 4; c++) {
+
+            int xt = (int) ((2 * (((pos.x + ax)) / 38)));
+            int yt = (int) ((2 * ((pos.y + ay)) / 38));
+            for (int i = 0; i < TileMapObj.blocks.size(); i++) {
+                if (((xt == TileMapNorm.blocks.get(i).getX()) && (yt == TileMapNorm.blocks.get(i).getY()))) {
+                    System.out.println("Inside Map at: " + xt + "/" + yt);
+                    return TileMapNorm.blocks.get(i).update(this);
+                }
+            }
+        }
+        return true;
     }
 }
