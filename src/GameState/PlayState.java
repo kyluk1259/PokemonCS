@@ -37,8 +37,8 @@ public class PlayState extends GameState {
         float posx = (int) ((GamePanel.getW() / 2) - (38));
         float posy = (int) ((GamePanel.getH() / 2) - (38));
 
-        tm = new TileManager("tileMaps/start.tmx");
-        player = new Player(new Sprite("Sprites/playerwalking.png", 38, 38), new Vector2d(0 + posx, 0 + posy), 80, gsm);
+        tm = new TileManager("tileMaps/startArea.tmx");
+        player = new Player(new Sprite("Sprites/playerwalking.png", 38, 38), new Vector2d(0 + posx, 0 + posy - 30), 80, gsm);
         float x = 0;
         float y = GamePanel.getH();
 
@@ -50,11 +50,13 @@ public class PlayState extends GameState {
 
         try {
             Thread.sleep(2500);
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException e) {
+        }
     }
 
     public void update() {
         if (pause != true) {
+            Vector2d.setWorldVar(world.x, world.y);
             player.update();
         }
     }
@@ -71,6 +73,7 @@ public class PlayState extends GameState {
             tm.render(g);
             player.render(g);
             g.setColor(Color.red);
+            Sprite.drawArray(g, font, String.valueOf(player.getXPosition()), new Vector2d(xStart + 600, 50), 32, 32, 24, 0);
             g.drawLine(420, 0, 420, 640);
             g.drawLine(0, 320, 840, 320);
             if (loadText == true) {

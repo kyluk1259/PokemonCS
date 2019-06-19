@@ -56,11 +56,11 @@ public class TileManager {
             Element eElement = (Element) node;
 
             imagePathTSX = eElement.getAttribute("source");
-            imagePath = imagePathTSX.substring(0, imagePathTSX.length()-4);
+            imagePath = imagePathTSX.substring(0, imagePathTSX.length() - 4);
 
             list = doc.getElementsByTagName("map");
             node = list.item(0);
-            eElement = (Element)node;
+            eElement = (Element) node;
 
             tileWidth = Integer.parseInt(eElement.getAttribute("tilewidth"));
             tileHeight = Integer.parseInt(eElement.getAttribute("tileheight"));
@@ -70,24 +70,24 @@ public class TileManager {
             list = doc.getElementsByTagName("layer");
             layers = list.getLength();
             String[] data = new String[layers];
-            
-            for(int i=0; i<layers; i++){
+
+            for (int i = 0; i < layers; i++) {
                 node = list.item(i);
-                eElement = (Element)node;
-                if(i <= 0){
+                eElement = (Element) node;
+                if (i <= 0) {
                     width = Integer.parseInt(eElement.getAttribute("width"));
                     height = Integer.parseInt(eElement.getAttribute("height"));
                 }
-                
+
                 data[i] = eElement.getElementsByTagName("data").item(0).getTextContent();
                 name = eElement.getAttribute("name");
-                
-                if(i >= 1){
+
+                if (i < 1) {
                     tm.add(new TileMapNorm(data[i], sprite, width, height, blockWidth, blockHeight, tileColumns));
-                }else if(i <= 1){
+                } else {
                     tm.add(new TileMapObj(data[i], sprite, width, height, blockWidth, blockHeight, tileColumns));
                 }
-                
+
                 System.out.println("Layer #" + i + ":\n" + data[i]);
             }
 
@@ -96,9 +96,9 @@ public class TileManager {
             System.out.println("ERROR TileManager: Couldn't load tilemap");
         }
     }
-    
-    public void render(Graphics2D g){
-        for(int i=0; i<tm.size(); i++){
+
+    public void render(Graphics2D g) {
+        for (int i = 0; i < tm.size(); i++) {
             tm.get(i).render(g);
         }
     }
