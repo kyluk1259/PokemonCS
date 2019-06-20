@@ -9,6 +9,7 @@ import Graphics.Sprite;
 import Utility.Vector2d;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 /**
@@ -18,7 +19,7 @@ import java.util.Iterator;
 public class TileMapObj extends TileMap {
 
     public static ArrayList<Block> blocks = new ArrayList<Block>();
-    public static Block[][][] objects = new Block[TileManager.layers][50][50];
+    public static HashMap<String, Block> objects = new HashMap<String, Block>();
 
     public TileMapObj(String data, Sprite sprite, int width, int height, int tileWidth, int tileHeight, int tileColumns, int layer) {
 
@@ -29,16 +30,13 @@ public class TileMapObj extends TileMap {
             int temp = Integer.parseInt(block[i].replaceAll("\\s+", ""));
             if (temp != 0) {
                 tempBlock = new ObjBlock(sprite.getSprite((int) ((temp - 1) % tileColumns), (int) ((temp - 1) / tileColumns)), new Vector2d((int) ((i % width) * tileWidth), (int) (int) ((i / height) * tileHeight)), tileWidth, tileHeight, (int) (i % width), (int) (i / height));
-                blocks.add(tempBlock);
-                objects[layer][i % width][i / height] = tempBlock;
-            } else {
-                objects[layer][i % width][i / height] = null;
+                objects.put(String.valueOf(i % width) + "," + String.valueOf((int) (i / height)), tempBlock);
             }
         }
     }
-
+        
     public void render(Graphics2D g) {
-        for (Block block : blocks) {
+        for (Block block : objects.values()) {
             block.render(g);
         }
     }

@@ -14,7 +14,6 @@ import static Pokemon.Pokedex.pokedex;
 import Pokemon.Potions;
 import Utility.KeyHandler;
 import Utility.Vector2d;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 
@@ -56,6 +55,7 @@ public class Player extends Entity {
         bounds.setYOff(38);
     }
 
+    //When player updates it checks this method to take in inputs
     public void move() {
         if (sprint) {
             sprite = runSprite;
@@ -154,10 +154,10 @@ public class Player extends Entity {
         }
     }
 
+    //Refreshes the player and all objects and variables associated with it
     public void update() {
         super.update();
         move();
-        //bounds.update();
         if (!bounds.collisionTile(dx, 0) && !bounds.outsideMap(dx, 0)) {
             PlayState.world.x += dx;
             pos.x += dx;
@@ -222,8 +222,6 @@ public class Player extends Entity {
     }
 
     public void render(Graphics2D g) {
-        g.setColor(Color.blue);
-        g.drawRect((int) (pos.getWorldVar().x + bounds.getXOff()), (int) (pos.getWorldVar().y + bounds.getYOff()), (int) bounds.getWidth(), (int) bounds.getHeight());
         g.drawImage(renderImage, (int) (pos.getWorldVar().x), (int) (pos.getWorldVar().y), size, size, null);
     }
 }

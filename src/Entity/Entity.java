@@ -75,6 +75,7 @@ public abstract class Entity {
         setAnimation(DOWN, sprite.getMainSpriteArray(DOWN), 10);
     }
 
+    //Getters and Setters
     public void setSize(int i) {
         size = i;
     }
@@ -105,6 +106,19 @@ public abstract class Entity {
         return ani;
     }
 
+    public Item getBagItem(int i) {
+        return playerBag.get(i);
+    }
+
+    public int getXPosition() {
+        return (int) ((2 * ((bounds.getPos().x + dx) + bounds.getXOff()) / 38));
+    }
+
+    public int getYPosition() {
+        return (int) ((2 * (bounds.getPos().y + dy) + bounds.getYOff()) / 38);
+    }
+
+    //Cycles through sprite arrays for movements and various animation
     public void animate() {
 
         if (up) {
@@ -140,6 +154,7 @@ public abstract class Entity {
         }
     }
 
+    //Sets the direction of which an interaction occurs
     private void setInteractDirection() {
         if (up) {
             hitBounds.setXOff(-size / 2);
@@ -156,6 +171,7 @@ public abstract class Entity {
         }
     }
 
+    //Updates variables and objects associated with an entity
     public void update() {
         if (ani.animating == true) {
             animate();
@@ -173,7 +189,7 @@ public abstract class Entity {
             dy = (float) maxSpeed;
         } else if (dy < ((-1) * maxSpeed)) {
             dy = (float) ((-1) * maxSpeed);
-        }   
+        }
     }
 
     public abstract void render(Graphics2D g);
@@ -182,19 +198,17 @@ public abstract class Entity {
 
     }
 
-    public Item getBagItem(int i) {
-        return playerBag.get(i);
-    }
-
+    //Bag array list controls
     public void addBagItem(Item item) {
         playerBag.add(item);
     }
-    
+
     public void useBagItem(int i) {
         playerBag.remove(i);
         player.bagSize = playerBag.size() - 1;
     }
 
+    //Pokmon array list controls
     public Pokemon getPokemon(int i) {
         return pokemon.get(i);
     }
@@ -207,13 +221,5 @@ public abstract class Entity {
         Pokemon temp = pokemon.get(i);
         pokemon.set(i, pokemon.get(j));
         pokemon.set(j, temp);
-    }
-    
-    public int getXPosition(){
-        return (int)((2*((bounds.getPos().x + dx) + bounds.getXOff()) / 38));
-    }
-    
-    public int getYPosition(){
-        return (int)((2*(bounds.getPos().y + dy) + bounds.getYOff()) / 38);       
     }
 }

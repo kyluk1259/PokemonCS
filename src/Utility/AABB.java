@@ -10,10 +10,6 @@ import Map.TileManager;
 import Map.TileMapNorm;
 import Map.TileMapObj;
 
-/**
- *
- * @author Kyle's PC
- */
 //THIS IS THE COLLISION CLASS
 public class AABB {
 
@@ -27,6 +23,7 @@ public class AABB {
     private Entity e;
     private int flash;
 
+    //Initialize a square hitbox somewhere on the map
     public AABB(Vector2d pos, int w, int h) {
         this.pos = pos;
         this.w = w;
@@ -36,6 +33,7 @@ public class AABB {
         size = Math.max(w, h);
     }
 
+    //Initialize a circle hitbox object on an entity
     public AABB(Vector2d pos, int r, Entity e) {
         this.pos = pos;
         this.r = r;
@@ -44,6 +42,7 @@ public class AABB {
         flash = 0;
     }
 
+    //Getters are below
     public Vector2d getPos() {
         return pos;
     }
@@ -60,6 +59,15 @@ public class AABB {
         return h;
     }
 
+    public float getXOff() {
+        return xOff;
+    }
+
+    public float getYOff() {
+        return yOff;
+    }
+
+    //Set hitbox size
     public void setBox(Vector2d pos, int w, int h) {
         this.pos = pos;
         this.w = w;
@@ -68,6 +76,7 @@ public class AABB {
         size = Math.max(w, h);
     }
 
+    //Set hitbox radius
     public void setCircle(Vector2d pos, int r) {
         this.pos = pos;
         this.r = r;
@@ -75,6 +84,7 @@ public class AABB {
         size = r;
     }
 
+    //Setters
     public void setWidth(float f) {
         w = f;
     }
@@ -89,14 +99,6 @@ public class AABB {
 
     public void setYOff(float f) {
         yOff = f;
-    }
-
-    public float getXOff() {
-        return xOff;
-    }
-
-    public float getYOff() {
-        return yOff;
     }
 
     //MAIN COLLISION MATH
@@ -114,6 +116,7 @@ public class AABB {
         return false;
     }
 
+    //calculates collision for a circle hitbox
     public boolean colCircleBox(AABB aBox) {
 
         float cx = (float) (pos.getWorldVar().x + r / Math.sqrt(2) - e.getSize() / Math.sqrt(2));
@@ -129,51 +132,32 @@ public class AABB {
         return false;
     }
 
+    //Checks for collision with object tile on map, checks every corner from the hitbox
     public boolean collisionTile(float ax, float ay) {
-        //  if (flash == 10) {
         for (int c = 0; c < 4; c++) {
 
             int xt = (int) ((2 * (((pos.x + ax) + (c % 2) * xOff + xOff) / 38)));
             int yt = (int) ((2 * ((pos.y + ay) + ((int) (c / 2)) * h + 20) / 38));
 
-            for (int i = 0; i < TileMapObj.blocks.size(); i++) {
-                if (((xt - 1 == TileMapObj.blocks.get(i).getX()) && (yt == TileMapObj.blocks.get(i).getY()))) {
-                    return TileMapObj.blocks.get(i).update(this);
-                }
+            if (TileMapObj.objects.containsKey(String.valueOf(xt) + "," + String.valueOf(yt))) {
+                return TileMapObj.objects.get(String.valueOf(xt) + "," + String.valueOf(yt)).update(this); //"this" returns true
             }
         }
+
         return false;
+
     }
 
+    //Checks to see if an entity is within bounds
     public boolean outsideMap(float ax, float ay) {
 
         int xt = (int) ((2 * (((pos.x + ax)) / 38)));
         int yt = (int) ((2 * ((pos.y + ay)) / 38));
 
-        if (xt > 0 || xt < 50) {
-            return false;
-        }/*
-         for (int i = 0; i < TileMapObj.blocks.size(); i++) {
-         if (((xt == TileMapNorm.blocks.get(i).getX()) && (yt == TileMapNorm.blocks.get(i).getY()))) {
-         System.out.println("Inside Map at: " + xt + "/" + yt);
-
-         return false;
-         }
-         }*/
-
-        if (yt > 0 || yt < 50) {
+        if ((xt > 0 || xt < 50) && (yt > 0 || yt < 50)) {
             return false;
         }
-        
+
         return true;
     }
-
-    public void update() {
-        if (flash < 10) {
-            flash++;
-        } else {
-            flash = 0;
-        }
-    }
-
 }
