@@ -133,6 +133,7 @@ public class AABB {
     }
 
     //Checks for collision with object tile on map, checks every corner from the hitbox
+    //Uses player position and checks if the map object hashmap contains those positions
     public boolean collisionTile(float ax, float ay) {
         for (int c = 0; c < 4; c++) {
 
