@@ -162,6 +162,7 @@ public class Player extends Entity {
     public void update() {
         super.update();
         move();
+        //bounds.update();
         if (!bounds.collisionTile(dx, 0) && !bounds.outsideMap(dx, 0)) {
             PlayState.world.x += dx;
             pos.x += dx;
