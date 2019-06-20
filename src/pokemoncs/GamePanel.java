@@ -27,7 +27,8 @@ public class GamePanel extends JPanel implements Runnable {
     public static int width = 420;
     public static int height = 320;
     public static int scale = 2;
-
+    private int x = 0;
+    
     //game run thread
     public Thread thread;
     private boolean running = false;
@@ -74,10 +75,10 @@ public class GamePanel extends JPanel implements Runnable {
     public void run() {
         init();
 
-        final double REFRESH = 600; //Refresh rate (FPS = refresh rate / target fps)
+        final double REFRESH = 70; //Refresh rate (FPS = refresh rate / target fps)
         final double UPDATE = 1000000000 / REFRESH; //Time before each update
 
-        final int BEFORERENDER = 5; // force update before render
+        final int BEFORERENDER = 8; // force update before render time
 
         double lastUpdateTime = System.nanoTime();
         double lastRenderTime;
@@ -134,7 +135,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    private int x = 0;
+    
 
     public void update() {
         gsm.update();
@@ -158,10 +159,12 @@ public class GamePanel extends JPanel implements Runnable {
         g2.dispose();
     }
 
+    //Return width of GamePanel
     public static int getW() {
         return width;
     }
-
+    
+    //Return height of GamePanel
     public static int getH() {
         return height;
     }

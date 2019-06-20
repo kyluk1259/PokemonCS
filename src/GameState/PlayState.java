@@ -63,6 +63,7 @@ public class PlayState extends GameState {
     }
 
     public void update() {
+        //Updates when pause is false
         if (pause != true) {
             Vector2d.setWorldVar(world.x, world.y);
             player.update();
@@ -70,6 +71,7 @@ public class PlayState extends GameState {
     }
 
     public void input(KeyHandler key) {
+        //Accepts inputs when pause is false
         if (pause != true) {
             player.input(key);
         }
@@ -78,12 +80,11 @@ public class PlayState extends GameState {
     public void render(Graphics2D g) {
         tm.render(g);
         player.render(g);
-        
+
+        //Renders these things when pause is false
         if (pause != true) {
             g.setColor(Color.red);
-            Sprite.drawArray(g, font, String.valueOf(player.getXPosition()), new Vector2d(xStart + 600, 50), 32, 32, 24, 0);
-            g.drawLine(420, 0, 420, 640);
-            g.drawLine(0, 320, 840, 320);
+            g.drawString(player.getXPosition() + " / " + player.getYPosition(), xStart + 600, 50);
             if (loadText == true) {
                 Sprite.drawText(g, font, text, new Vector2d(xStart, 400), 32, 32, 24, 0, index);
                 if (index == text.length()) {
