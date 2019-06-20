@@ -22,6 +22,7 @@ import org.w3c.dom.NodeList;
  */
 public class TileManager {
 
+    public static int layers;
     public static ArrayList<TileMap> tm;
 
     public TileManager() {
@@ -42,7 +43,6 @@ public class TileManager {
         int tileHeight;
         int tileCount;
         int tileColumns;
-        int layers = 0;
         Sprite sprite;
 
         try {
@@ -85,7 +85,7 @@ public class TileManager {
                 if (i < 1) {
                     tm.add(new TileMapNorm(data[i], sprite, width, height, blockWidth, blockHeight, tileColumns));
                 } else {
-                    tm.add(new TileMapObj(data[i], sprite, width, height, blockWidth, blockHeight, tileColumns));
+                    tm.add(new TileMapObj(data[i], sprite, width, height, blockWidth, blockHeight, tileColumns, i));
                 }
 
                 System.out.println("Layer #" + i + ":\n" + data[i]);

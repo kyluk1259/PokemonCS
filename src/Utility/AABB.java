@@ -6,6 +6,7 @@
 package Utility;
 
 import Entity.Entity;
+import Map.TileManager;
 import Map.TileMapNorm;
 import Map.TileMapObj;
 
@@ -24,11 +25,13 @@ public class AABB {
     private float r;
     private int size;
     private Entity e;
+    private int flash;
 
     public AABB(Vector2d pos, int w, int h) {
         this.pos = pos;
         this.w = w;
         this.h = h;
+        flash = 0;
 
         size = Math.max(w, h);
     }
@@ -38,6 +41,7 @@ public class AABB {
         this.r = r;
         size = r;
         this.e = e;
+        flash = 0;
     }
 
     public Vector2d getPos() {
@@ -126,13 +130,15 @@ public class AABB {
     }
 
     public boolean collisionTile(float ax, float ay) {
+        //  if (flash == 10) {
         for (int c = 0; c < 4; c++) {
 
             int xt = (int) ((2 * (((pos.x + ax) + (c % 2) * xOff + xOff) / 38)));
             int yt = (int) ((2 * ((pos.y + ay) + ((int) (c / 2)) * h + 20) / 38));
+
             for (int i = 0; i < TileMapObj.blocks.size(); i++) {
                 if (((xt - 1 == TileMapObj.blocks.get(i).getX()) && (yt == TileMapObj.blocks.get(i).getY()))) {
-                    System.out.println("Collision: " + xt + "/" + yt);
+                    System.out.println(TileMapObj.blocks.get(0).getX());
                     return TileMapObj.blocks.get(i).update(this);
                 }
             }
@@ -141,17 +147,34 @@ public class AABB {
     }
 
     public boolean outsideMap(float ax, float ay) {
-        for (int c = 0; c < 4; c++) {
 
-            int xt = (int) ((2 * (((pos.x + ax)) / 38)));
-            int yt = (int) ((2 * ((pos.y + ay)) / 38));
-            for (int i = 0; i < TileMapObj.blocks.size(); i++) {
-                if (((xt == TileMapNorm.blocks.get(i).getX()) && (yt == TileMapNorm.blocks.get(i).getY()))) {
-                    System.out.println("Inside Map at: " + xt + "/" + yt);
-                    return TileMapNorm.blocks.get(i).update(this);
-                }
-            }
+        int xt = (int) ((2 * (((pos.x + ax)) / 38)));
+        int yt = (int) ((2 * ((pos.y + ay)) / 38));
+
+        if (xt > 0 || xt < 50) {
+            return false;
+        }/*
+         for (int i = 0; i < TileMapObj.blocks.size(); i++) {
+         if (((xt == TileMapNorm.blocks.get(i).getX()) && (yt == TileMapNorm.blocks.get(i).getY()))) {
+         System.out.println("Inside Map at: " + xt + "/" + yt);
+
+         return false;
+         }
+         }*/
+
+        if (yt > 0 || yt < 50) {
+            return false;
         }
+        
         return true;
     }
+
+    public void update() {
+        if (flash < 10) {
+            flash++;
+        } else {
+            flash = 0;
+        }
+    }
+
 }
