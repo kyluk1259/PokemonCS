@@ -200,12 +200,21 @@ public class BattleState extends GameState {
             if (key.down.clicked) {
                 if (bagItem + 1 >= player.bagSize) {
                     bagItem = player.bagSize;
-                    System.out.println("clicked");
+                    System.out.println(bagItem + " / " + player.bagSize);
                 } else {
                     bagItem += 1;
-                    System.out.println(bagItem);
+                    System.out.println(bagItem + " / " + player.bagSize);
                 }
                 key.down.clicked = false;
+            }
+            
+            if (key.A.clicked) {
+                playerPokemon.setHp(player.getBagItem(bagItem).getHeal());
+                player.useBagItem(bagItem);
+                inMenu = true;
+                bagMenu = false;
+                bagItem = 0;
+                key.A.clicked = false;
             }
         }
 

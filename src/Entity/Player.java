@@ -10,7 +10,6 @@ import static GameState.GameStateManager.BATTLESTATE;
 import static GameState.GameStateManager.MENUSTATE;
 import GameState.PlayState;
 import Graphics.Sprite;
-import Pokemon.Pokeballs;
 import static Pokemon.Pokedex.pokedex;
 import Pokemon.Potions;
 import Utility.KeyHandler;
@@ -32,6 +31,7 @@ public class Player extends Entity {
     private final int OPENBAG = 0;
     private final int CLOSEBAG = 1;
     public int bagSize, pokemonCount;
+    public static boolean unpause = false;
 
     public Player(Sprite sprite, Vector2d origin, int size, GameStateManager gs) {
         super(sprite, origin, size);
@@ -40,21 +40,13 @@ public class Player extends Entity {
         this.addPokemon(pokedex.get(1));
         this.addPokemon(pokedex.get(2));
         this.addPokemon(pokedex.get(3));
-        this.addBagItem(new Pokeballs("Ultra Ball"));
         this.addBagItem(new Potions("Hyper Potion"));
-        this.addBagItem(new Pokeballs("Master Ball"));
         this.addBagItem(new Potions("Full Restore"));
-        this.addBagItem(new Pokeballs("Ultra Ball"));
         this.addBagItem(new Potions("Hyper Potion"));
-        this.addBagItem(new Pokeballs("Master Ball"));
         this.addBagItem(new Potions("Full Restore"));
-        this.addBagItem(new Pokeballs("Ultra Ball"));
         this.addBagItem(new Potions("Hyper Potion"));
-        this.addBagItem(new Pokeballs("Master Ball"));
         this.addBagItem(new Potions("Full Restore"));
-        this.addBagItem(new Pokeballs("Ultra Ball"));
         this.addBagItem(new Potions("Hyper Potion"));
-        this.addBagItem(new Pokeballs("Master Ball"));
         this.addBagItem(new Potions("Full Restore"));
         bagSize = playerBag.size() - 1;
         pokemonCount = pokemon.size() - 1;
@@ -126,6 +118,7 @@ public class Player extends Entity {
                 ani.stopAnimating();
                 openBag = false;
                 gsm.add(MENUSTATE);
+                PlayState.pause = true;
             }
         }
 
@@ -145,7 +138,7 @@ public class Player extends Entity {
             back = false;
         }
 
-        if (back && pause) {
+        if (unpause) {
 
             ani.startAnimating();
             closeBag = true;
@@ -155,6 +148,7 @@ public class Player extends Entity {
                 pause = false;
                 back = false;
                 closeBag = false;
+                unpause = false;
                 sprite = walkSprite;
             }
         }
@@ -229,7 +223,7 @@ public class Player extends Entity {
 
     public void render(Graphics2D g) {
         g.setColor(Color.blue);
-        g.drawRect((int) (pos.getWorldVar().x + bounds.getXOff()), (int) (pos.getWorldVar().y + bounds.getYOff()), (int)bounds.getWidth(), (int)bounds.getHeight());
+        g.drawRect((int) (pos.getWorldVar().x + bounds.getXOff()), (int) (pos.getWorldVar().y + bounds.getYOff()), (int) bounds.getWidth(), (int) bounds.getHeight());
         g.drawImage(renderImage, (int) (pos.getWorldVar().x), (int) (pos.getWorldVar().y), size, size, null);
     }
 }

@@ -5,6 +5,7 @@
  */
 package Entity;
 
+import static GameState.PlayState.player;
 import Graphics.Animation;
 import Graphics.Sprite;
 import Pokemon.Item;
@@ -56,8 +57,8 @@ public abstract class Entity {
     protected AABB hitBounds;
     protected AABB bounds;
 
-    protected ArrayList<Pokemon> pokemon = new ArrayList();
-    protected ArrayList<Item> playerBag = new ArrayList();
+    protected ArrayList<Pokemon> pokemon = new ArrayList<Pokemon>();
+    protected ArrayList<Item> playerBag = new ArrayList<Item>();
 
     public Entity(Sprite sprite, Vector2d origin, int size) {
         this.sprite = sprite;
@@ -187,6 +188,11 @@ public abstract class Entity {
 
     public void addBagItem(Item item) {
         playerBag.add(item);
+    }
+    
+    public void useBagItem(int i) {
+        playerBag.remove(i);
+        player.bagSize = playerBag.size() - 1;
     }
 
     public Pokemon getPokemon(int i) {

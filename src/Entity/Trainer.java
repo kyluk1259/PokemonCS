@@ -20,8 +20,9 @@ public class Trainer extends Entity {
     private Image renderImage;
     private GameStateManager gsm;
     private Sprite battleSprite;
+    private String encounterText, halfwayText, winText;
     
-    public Trainer(Sprite sprite, Vector2d origin, int size, GameStateManager gs, Sprite bSprite){
+    public Trainer(Sprite sprite, Vector2d origin, int size, String startText, String halfwayText, String endText, GameStateManager gs, Sprite bSprite){
         super(sprite, origin, size);
         gsm = gs;
         battleSprite = bSprite;
@@ -37,6 +38,18 @@ public class Trainer extends Entity {
     
     public void render(Graphics2D g) {
          g.drawImage(renderImage, (int) (pos.x), (int) (pos.y), size, size, null);
+    }
+    
+    public String getStartText(){
+        return encounterText;
+    }
+    
+    public String getHalfwayText(){
+        return halfwayText;
+    }
+    
+    public String getEndText(){
+        return winText;
     }
     
 }

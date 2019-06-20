@@ -6,12 +6,15 @@
 package GameState;
 
 import Entity.Player;
+import Entity.Prof;
+import Entity.Trainer;
 import Graphics.Sprite;
 import Map.TileManager;
 import Utility.KeyHandler;
 import Utility.Vector2d;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import pokemoncs.GamePanel;
 
 /**
@@ -22,7 +25,12 @@ public class PlayState extends GameState {
 
     public static Player player;
     public Sprite sprite;
+
     private TileManager tm;
+
+    public static ArrayList<Trainer> trainers = new ArrayList<Trainer>();
+
+    //private static Prof kaune = new Prof();
     public static boolean loadText, textComplete, pause;
     public static String text;
     public static int index = 0;
@@ -32,13 +40,13 @@ public class PlayState extends GameState {
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
-        world = new Vector2d();
+        world = new Vector2d(-40, 480);
         Vector2d.setWorldVar(world.x, world.y);
         float posx = (int) ((GamePanel.getW() / 2) - (38));
         float posy = (int) ((GamePanel.getH() / 2) - (38));
 
         tm = new TileManager("tileMaps/startArea.tmx");
-        player = new Player(new Sprite("Sprites/playerwalking.png", 38, 38), new Vector2d(0 + posx, 0 + posy - 30), 80, gsm);
+        player = new Player(new Sprite("Sprites/playerwalking.png", 38, 38), new Vector2d(world.x + posx, world.y + posy), 80, gsm);
         float x = 0;
         float y = GamePanel.getH();
 
@@ -68,10 +76,10 @@ public class PlayState extends GameState {
     }
 
     public void render(Graphics2D g) {
-
+        tm.render(g);
+        player.render(g);
+        
         if (pause != true) {
-            tm.render(g);
-            player.render(g);
             g.setColor(Color.red);
             Sprite.drawArray(g, font, String.valueOf(player.getXPosition()), new Vector2d(xStart + 600, 50), 32, 32, 24, 0);
             g.drawLine(420, 0, 420, 640);

@@ -5,8 +5,6 @@
  */
 package Pokemon;
 
-import static GameState.PlayState.player;
-
 /**
  *
  * @author Kyle's PC
@@ -14,7 +12,6 @@ import static GameState.PlayState.player;
 public abstract class Item {
     protected String name, itemDescription;
     protected int heal;
-    protected Status cure;
     protected float captureChance;
     protected int salePrice;
     protected int purchasePrice;
@@ -29,5 +26,9 @@ public abstract class Item {
     
     public String getDescription(){
         return itemDescription;
+    }
+
+    public int getHeal() {
+        return heal;
     }
 }

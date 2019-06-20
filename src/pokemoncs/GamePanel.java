@@ -74,7 +74,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void run() {
         init();
 
-        final double REFRESH = 70; //Refresh rate (FPS = refresh rate / target fps)
+        final double REFRESH = 600; //Refresh rate (FPS = refresh rate / target fps)
         final double UPDATE = 1000000000 / REFRESH; //Time before each update
 
         final int BEFORERENDER = 5; // force update before render

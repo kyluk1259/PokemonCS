@@ -138,7 +138,6 @@ public class AABB {
 
             for (int i = 0; i < TileMapObj.blocks.size(); i++) {
                 if (((xt - 1 == TileMapObj.blocks.get(i).getX()) && (yt == TileMapObj.blocks.get(i).getY()))) {
-                    System.out.println(TileMapObj.blocks.get(0).getX());
                     return TileMapObj.blocks.get(i).update(this);
                 }
             }

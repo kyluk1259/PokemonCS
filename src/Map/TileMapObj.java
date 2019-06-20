@@ -35,26 +35,6 @@ public class TileMapObj extends TileMap {
                 objects[layer][i % width][i / height] = null;
             }
         }
-        /*
-         for (int i = 0; i < (width * height); i++) {
-         int temp = Integer.parseInt(block[i].replaceAll("\\s+", ""));
-         for (int x = 0; x < 50; x++) {
-         for (int y = 0; y < 50; y++) {
-         if (temp != 0) {
-         objects[layer][x][y] = false;
-         } else if (temp == 0) {
-         objects[layer][x][y] = true;
-         }
-         }
-         }
-         }
-        
-         if(objects[1][20][14] = true){
-         System.out.println("True");
-         }else{
-         System.out.println("False");
-         }
-         */
     }
 
     public void render(Graphics2D g) {
