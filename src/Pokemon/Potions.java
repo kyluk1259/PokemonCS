@@ -5,6 +5,8 @@
  */
 package Pokemon;
 
+import static GameState.PlayState.player;
+
 /**
  *
  * @author Kyle's PC
@@ -22,9 +24,11 @@ public class Potions extends Item {
     
     private void newHyperPotion(){
         itemDescription = "Heal a pokemon\nfor 200HP.";
+        heal = 200;
     }
     
     private void newFullRestore(){
         itemDescription = "Fully heal\nand cure\n a pokemon.";
+        heal = 1000;
     }
 }

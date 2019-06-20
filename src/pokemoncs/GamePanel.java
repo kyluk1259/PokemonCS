@@ -35,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable {
     //images
     private BufferedImage image;
     private Graphics2D g;
-    private Pokedex loadWildPokemon, loadPlayerPokemon, loadTrainerPokemon;
+    private Pokedex pokemonPokedex;
 
     //input method
     private KeyHandler key;
@@ -66,9 +66,7 @@ public class GamePanel extends JPanel implements Runnable {
         image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         g = (Graphics2D) image.getGraphics();
         key = new KeyHandler(this); //initialize key handler
-        loadWildPokemon = new Pokedex();
-        loadPlayerPokemon = new Pokedex();
-        loadTrainerPokemon = new Pokedex();
+        pokemonPokedex = new Pokedex();
 
         gsm = new GameStateManager();
     }
@@ -76,7 +74,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void run() {
         init();
 
-        final double REFRESH = 70; //Refresh rate (FPS = refresh rate / target fps)
+        final double REFRESH = 600; //Refresh rate (FPS = refresh rate / target fps)
         final double UPDATE = 1000000000 / REFRESH; //Time before each update
 
         final int BEFORERENDER = 5; // force update before render
@@ -84,7 +82,7 @@ public class GamePanel extends JPanel implements Runnable {
         double lastUpdateTime = System.nanoTime();
         double lastRenderTime;
 
-        final double TARGET_FPS = 12;
+        final double TARGET_FPS = 10;
         final double TBR = 1000000000 / TARGET_FPS; //Time before render
 
         int frameCount = 0;
@@ -92,6 +90,7 @@ public class GamePanel extends JPanel implements Runnable {
         int oldFrameCount = 0;
 
         while (running) {
+            Thread.yield();
             double now = System.nanoTime();
             int updateCount = 0;
             while (((now = lastUpdateTime) > UPDATE) && (updateCount < BEFORERENDER)) {
@@ -147,7 +146,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void render() {
         if (g != null) {
-            g.setColor(new Color(66, 134, 244));
+            g.setColor(Color.BLACK);
             g.fillRect(0, 0, width, height);
             gsm.render(g);
         }

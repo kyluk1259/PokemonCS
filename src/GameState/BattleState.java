@@ -5,6 +5,8 @@
  */
 package GameState;
 
+import static GameState.GameStateManager.BLACKOUTSTATE;
+import static GameState.GameStateManager.PLAYSTATE;
 import static GameState.PlayState.player;
 import Graphics.Background;
 import Graphics.Sprite;
@@ -67,7 +69,7 @@ public class BattleState extends GameState {
         currentBackground = battleBackground;
 
         playerPokemon = player.getPokemon(0);
-        wildPokemon =  Pokedex.generatePokemon(1);
+        wildPokemon = Pokedex.generatePokemon(1);
 
         //lastMoveUsed = playerPokemon.getMove(0).getName();
         strings = new String[]{"You are challenged by PKMN Trainer Kyle.",
@@ -116,6 +118,10 @@ public class BattleState extends GameState {
 
             if (flash != 5) {
                 flash++;
+                if (playerPokemon.getHp() <= 0) {
+                    Thread.yield();
+                    gsm.addAndPop(BLACKOUTSTATE);  
+                }
             } else {
                 flash = 0;
 
@@ -200,12 +206,21 @@ public class BattleState extends GameState {
             if (key.down.clicked) {
                 if (bagItem + 1 >= player.bagSize) {
                     bagItem = player.bagSize;
-                    System.out.println("clicked");
+                    System.out.println(bagItem + " / " + player.bagSize);
                 } else {
                     bagItem += 1;
-                    System.out.println(bagItem);
+                    System.out.println(bagItem + " / " + player.bagSize);
                 }
                 key.down.clicked = false;
+            }
+
+            if (key.A.clicked) {
+                playerPokemon.setHp(player.getBagItem(bagItem).getHeal());
+                player.useBagItem(bagItem);
+                inMenu = true;
+                bagMenu = false;
+                bagItem = 0;
+                key.A.clicked = false;
             }
         }
 
@@ -239,8 +254,8 @@ public class BattleState extends GameState {
                 pokemonCount = 0;
                 key.left.clicked = false;
             }
-            
-            if(key.A.clicked){
+
+            if (key.A.clicked) {
                 playerPokemon = player.getPokemon(pokemonCount);
                 player.swapPokemon(0, pokemonCount);
                 inMenu = true;
@@ -322,7 +337,10 @@ public class BattleState extends GameState {
                         inMenu = false;
                     }
                     if (currentSelection[x][y] == 3 && interact) {
-                        gsm.pop(1);
+                        PlayState.pause = false;
+                        inMenu = false;
+                        gsm.addAndPop(PLAYSTATE);
+                        Thread.yield();
                         try {
                             TimeUnit.MILLISECONDS.sleep(200
                             );

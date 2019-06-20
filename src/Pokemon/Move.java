@@ -13,7 +13,6 @@ public class Move {
     private Type type;
     private int power, accuracy;
     private float statusEffect;
-    private Status status;
     private String moveName;
     
     public String getName(){

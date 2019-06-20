@@ -5,6 +5,8 @@
  */
 package Pokemon;
 
+import GameState.BlackoutState;
+import GameState.GameStateManager;
 import Graphics.Animation;
 import Graphics.Sprite;
 import Utility.Vector2d;
@@ -26,7 +28,6 @@ public class Pokemon {
     private float evasion, accuracy, captureRate;
     private Move moves[];
     private Type typeA, typeB;
-    private Status currentStatus;
     private BufferedImage fSprite, bSprite;
     private Animation ani;
 
@@ -50,27 +51,6 @@ public class Pokemon {
         diff = (float) (hp / maxHp);
     }
 
-    //One type, status effect, add moveset
-    public Pokemon(String name, int maxHealth, int health, int attack, int defense, int spAttack, int spDefense, int speed, int experience, int level, float capture, Type tA, Sprite sprite, Sprite backSprite, Status status) {
-        pokemon = name;
-        maxHp = maxHealth;
-        hp = health;
-        att = attack;
-        def = defense;
-        spAtt = spAttack;
-        spDef = spDefense;
-        spd = speed;
-        exp = experience;
-        lvl = level;
-        captureRate = capture;
-        //moves = moveset;
-        typeA = tA;
-        fSprite = sprite.getSpriteSheet();
-        bSprite = backSprite.getSpriteSheet();
-        currentStatus = status;
-        ani = new Animation();
-        diff = (hp / maxHp);
-    }
 
     //Two types, no status, add moveset
     public Pokemon(String name, int maxHealth, int health, int attack, int defense, int spAttack, int spDefense, int speed, int experience, int level, float capture, Type tA, Type tB, Sprite sprite, Sprite backSprite) {
@@ -90,29 +70,6 @@ public class Pokemon {
         typeB = tB;
         fSprite = sprite.getSpriteSheet();
         bSprite = backSprite.getSpriteSheet();
-        ani = new Animation();
-        diff = (hp / maxHp);
-    }
-
-    //Two types, status effect
-    public Pokemon(String name, int maxHealth, int health, int attack, int defense, int spAttack, int spDefense, int speed, int experience, int level, Move moveset[], float capture, Type tA, Type tB, Sprite frontSprite, Sprite backSprite, Status status) {
-        pokemon = name;
-        maxHp = maxHealth;
-        hp = health;
-        att = attack;
-        def = defense;
-        spAtt = spAttack;
-        spDef = spDefense;
-        spd = speed;
-        exp = experience;
-        lvl = level;
-        captureRate = capture;
-        moves = moveset;
-        typeA = tA;
-        typeB = tB;
-        fSprite = frontSprite.getSpriteSheet();
-        bSprite = backSprite.getSpriteSheet();
-        currentStatus = status;
         ani = new Animation();
         diff = (hp / maxHp);
     }
@@ -182,10 +139,6 @@ public class Pokemon {
         return typeB;
     }
 
-    public Status getStatus() {
-        return currentStatus;
-    }
-
     public BufferedImage getSprite(int i) {
         if (i == 0) {
             return fSprite;
@@ -208,7 +161,15 @@ public class Pokemon {
     }
 
     public void setHp(int diff) {
+        if(hp + diff <= maxHp){
         hp += diff;
+        }else{
+            hp = maxHp;
+        }
+        
+        if(hp + diff <= 0){
+            hp = 0;
+        }
     }
 
     public void setAtt(int diff) {
@@ -247,10 +208,6 @@ public class Pokemon {
         accuracy = accuracy * acc;
     }
 
-    public void setStatus(Status status) {
-        currentStatus = status;
-    }
-
     public void setAnimation(int i, BufferedImage[] frames, int delay) {
         currentAnimation = i;
         ani.setFrames(frames);
@@ -262,12 +219,21 @@ public class Pokemon {
         if (i == 0) {
             
             if(this.pokemon.equalsIgnoreCase("pikachu")){
-            Sprite.drawImage(g, this.getSprite(i), new Vector2d(580, 180), 130, 140);
+            Sprite.drawImage(g, this.getSprite(i), new Vector2d(560, 180), 130, 140);
             }
             
             if(this.pokemon.equalsIgnoreCase("charizard")){
                 Sprite.drawImage(g, this.getSprite(i), new Vector2d(550, 110), 160, 210);
             }
+            
+            if(this.pokemon.equalsIgnoreCase("weavile")){
+            Sprite.drawImage(g, this.getSprite(i), new Vector2d(560, 140), 130, 160);
+            }
+            
+             if(this.pokemon.equalsIgnoreCase("scizor")){
+            Sprite.drawImage(g, this.getSprite(i), new Vector2d(560, 110), 130, 180);
+            }
+            
         } else {
             
             if (this.pokemon.equalsIgnoreCase("pikachu")) {
@@ -276,6 +242,14 @@ public class Pokemon {
             
             if (this.pokemon.equalsIgnoreCase("charizard")){
                 Sprite.drawImage(g, this.getSprite(i), new Vector2d(105, 230), 300, 250);
+            }
+            
+            if(this.pokemon.equalsIgnoreCase("weavile")){
+            Sprite.drawImage(g, this.getSprite(i), new Vector2d(130, 280), 180, 200);
+            }
+            
+            if(this.pokemon.equalsIgnoreCase("scizor")){
+            Sprite.drawImage(g, this.getSprite(i), new Vector2d(130, 230), 210, 230);
             }
         }
     }

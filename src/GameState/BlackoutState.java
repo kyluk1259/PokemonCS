@@ -24,7 +24,7 @@ public class BlackoutState extends GameState {
         color = 0;
         count = 255;
         renderStop = false;
-        text = "You blacked out and lost *400. You woke up at the nearest pokemon centre fully healed.";
+        text = "You blacked out along with your pokemon. You and your pokemon woke up at the bottom of the mountain fully rested.";
         index = 0;
     }
 
@@ -63,7 +63,9 @@ public class BlackoutState extends GameState {
             } catch (InterruptedException e) {
                 System.out.println("BlackoutState ERROR: Couldn't load PlayState");
             }
-            gsm.addAndPop(PLAYSTATE);
+            PlayState.pause = false;
+            Thread.yield();
+            gsm.pop(1);
         }
 
     }
