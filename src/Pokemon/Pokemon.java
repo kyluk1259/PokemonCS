@@ -5,6 +5,8 @@
  */
 package Pokemon;
 
+import GameState.BlackoutState;
+import GameState.GameStateManager;
 import Graphics.Animation;
 import Graphics.Sprite;
 import Utility.Vector2d;
@@ -163,6 +165,10 @@ public class Pokemon {
         hp += diff;
         }else{
             hp = maxHp;
+        }
+        
+        if(hp + diff <= 0){
+            hp = 0;
         }
     }
 

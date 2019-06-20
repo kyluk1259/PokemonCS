@@ -5,6 +5,8 @@
  */
 package GameState;
 
+import static GameState.GameStateManager.BLACKOUTSTATE;
+import static GameState.GameStateManager.PLAYSTATE;
 import static GameState.PlayState.player;
 import Graphics.Background;
 import Graphics.Sprite;
@@ -116,6 +118,10 @@ public class BattleState extends GameState {
 
             if (flash != 5) {
                 flash++;
+                if (playerPokemon.getHp() <= 0) {
+                    Thread.yield();
+                    gsm.addAndPop(BLACKOUTSTATE);  
+                }
             } else {
                 flash = 0;
 
@@ -207,7 +213,7 @@ public class BattleState extends GameState {
                 }
                 key.down.clicked = false;
             }
-            
+
             if (key.A.clicked) {
                 playerPokemon.setHp(player.getBagItem(bagItem).getHeal());
                 player.useBagItem(bagItem);
@@ -331,7 +337,10 @@ public class BattleState extends GameState {
                         inMenu = false;
                     }
                     if (currentSelection[x][y] == 3 && interact) {
-                        gsm.pop(1);
+                        PlayState.pause = false;
+                        inMenu = false;
+                        gsm.addAndPop(PLAYSTATE);
+                        Thread.yield();
                         try {
                             TimeUnit.MILLISECONDS.sleep(200
                             );

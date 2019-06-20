@@ -90,6 +90,7 @@ public class GamePanel extends JPanel implements Runnable {
         int oldFrameCount = 0;
 
         while (running) {
+            Thread.yield();
             double now = System.nanoTime();
             int updateCount = 0;
             while (((now = lastUpdateTime) > UPDATE) && (updateCount < BEFORERENDER)) {
